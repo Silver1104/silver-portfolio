@@ -17,7 +17,7 @@ export function CursorRevealOverlay({ children, underLayer }: {
   const [isOverLink, setIsOverLink] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const animationFrameRef = useRef<number | undefined>(undefined);
- 
+
   // Configuration
   const trailLength = 8; // Number of trail positions
   const trailDecay = 500; // Trail lifespan in ms
@@ -26,10 +26,10 @@ export function CursorRevealOverlay({ children, underLayer }: {
   const isElementOrParentLink = useCallback((element: Element): boolean => {
     let current: Element | null = element;
     while (current && current !== containerRef.current) {
-      if (current.tagName.toLowerCase() === 'a' || 
-          current.hasAttribute('href') ||
-          current.getAttribute('role') === 'button' ||
-          current.classList.contains('cursor-no-reveal')) { // Optional: add custom class for exclusion
+      if (current.tagName.toLowerCase() === 'a' ||
+        current.hasAttribute('href') ||
+        current.getAttribute('role') === 'button' ||
+        current.classList.contains('cursor-no-reveal')) { // Optional: add custom class for exclusion
         return true;
       }
       current = current.parentElement;
@@ -55,12 +55,12 @@ export function CursorRevealOverlay({ children, underLayer }: {
         const rect = containerRef.current.getBoundingClientRect();
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
-        
+
         // Check if cursor is over a link
         const elementUnderCursor = document.elementFromPoint(e.clientX, e.clientY);
         const overLink = elementUnderCursor ? isElementOrParentLink(elementUnderCursor) : false;
         setIsOverLink(overLink);
-        
+
         // Only update cursor trail if not over a link
         if (!overLink) {
           updateCursorTrail(x, y);
@@ -97,12 +97,12 @@ export function CursorRevealOverlay({ children, underLayer }: {
     <div ref={containerRef} className="relative w-full h-full overflow-hidden">
       {/* Constellation background with repulsion based on latest cursor */}
       <NetworkArchitectureBackground cursorPosition={isOverLink ? undefined : latestCursor ?? undefined} />
-      
+
       {/* Main content layer - always visible */}
       <div className="relative w-full h-full bg-transparent z-10">
         {children}
       </div>
-      
+
       {/* Reveal layers - multiple circles for cursor trail effect */}
       {!isOverLink && cursorTrail.map(position => {
         const age = Date.now() - position.timestamp;
