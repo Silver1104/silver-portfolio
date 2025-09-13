@@ -2,7 +2,6 @@ import { CursorRevealOverlay } from "~/app/_components/cursor-overlay";
 import { HydrateClient, api } from "~/trpc/server";
 import { Titlebgcontent } from "./title/TitleBgPage";
 import { TitlepageContent } from "./title/TitlePage";
-import { PortfolioHome } from "./portfolio/page";
 import Link from "next/link";
 
 export default async function Home() {
